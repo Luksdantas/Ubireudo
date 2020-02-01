@@ -12,6 +12,7 @@
 /build
 
 #hosting
+src/firebase-debug.log
 /.firebase
 
 # misc
