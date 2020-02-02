@@ -16,7 +16,10 @@ const config = {
 };
 firebase.initializeApp(config);
 var storage = firebase.storage();
+var database = firebase.database();
 var storageRef = storage.ref();
+
+console.log(database.ref(''))
 
 class FileInput extends React.Component {
   constructor(props) {
