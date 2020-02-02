@@ -1,31 +1,69 @@
 import React, { useState, useEffect } from 'react';
-
 import './Login.css';
+import './App.css';
 import './global.css'
 import './App.css'
 import firebase from "firebase"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
+import StudentForm from './components/StudentForm'
+import Cropper from 'react-easy-crop'
 
-// Configure Firebase.
-const config = {
-  apiKey: 'AIzaSyBCDqncv8ZHjdxm2BOTFkDmw-LlKLhfRqY',
-  authDomain: 'ubireudo.firebaseapp.com',
-  storageBucket: 'gs://ubireudo.appspot.com',
-  databaseURL: 'https://ubireudo.firebaseio.com/',
-  // ...
+const firebaseConfig = {
+  apiKey: "AIzaSyBCDqncv8ZHjdxm2BOTFkDmw-LlKLhfRqY",
+  authDomain: "ubireudo.firebaseapp.com",
+  databaseURL: "https://ubireudo.firebaseio.com",
+  projectId: "ubireudo",
+  storageBucket: "ubireudo.appspot.com",
+  messagingSenderId: "419030368719",
+  appId: "1:419030368719:web:3708b39f72fb232a6d92ba",
+  measurementId: "G-Q6BD3QCHMH"
 };
-firebase.initializeApp(config);
+
+firebase.initializeApp(firebaseConfig);
 var storage = firebase.storage();
 var database = firebase.database();
 var storageRef = storage.ref();
+
+function httpGetAsync(url, callback) {
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+          callback(xmlHttp.responseText);
+      }
+  }
+  xmlHttp.open("GET", url, true)
+  xmlHttp.send(null);
+}
+
+httpGetAsync('https://ubireudo.firebaseio.com/ubireudo/users_public.json', function(texto){
+  console.log(JSON.parse(texto))
+});
 
 class FileInput extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fileInput = React.createRef();
-    this.state = { image: firebase.auth().currentUser.photoURL };
+    this.state = {
+      image: firebase.auth().currentUser.photoURL,
+      crop: { x: 0, y: 0 },
+      zoom: 1,
+      aspect: 4 / 3,
+    };
   }
+
+  onCropChange = crop => {
+    this.setState({ crop })
+  }
+
+  onCropComplete = (croppedArea, croppedAreaPixels) => {
+    console.log(croppedArea, croppedAreaPixels)
+  }
+
+  onZoomChange = zoom => {
+    this.setState({ zoom })
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     alert(
@@ -100,6 +138,18 @@ class FileInput extends React.Component {
     );
   }
 }
+
+/*<div>
+  <Cropper
+    image={this.state.image}
+    crop={this.state.crop}
+    zoom={this.state.zoom}
+    aspect={this.state.aspect}
+    onCropChange={this.onCropChange}
+    onCropComplete={this.onCropComplete}
+    onZoomChange={this.onZoomChange}
+  />
+</div> */
 
 class SignInScreen extends React.Component {
 
