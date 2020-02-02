@@ -4,13 +4,12 @@
     padding:  60px 30px;
 
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
 #app main {
     margin-left: 30px;
-    margin-right: 30px;
 }
 
 @media (max-width: 1000px) {
@@ -20,9 +19,151 @@
 
     #app main {
         margin-left: 0;
-        margin-right: 0;
         margin-top: 30px;
     }
 
+    #app aside {
+        width: 100%;
+    }
+}
 
+#app main {
+    flex: 1;
+}
+
+#app main ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    list-style: none;
+}
+
+@media (max-width: 650px) {
+ #app main ul {
+     grid-template-columns: 1fr;
+ }
+}
+
+aside {
+    width: 320px;
+    background: #FFF;
+    box-shadow:  0 0 14px 0 rgba(0, 0, 0, 0.02);
+    border-radius: 2px;
+    padding: 30px 20px;
+}
+
+aside strong {
+    font-size: 20px;
+    text-align: center;
+    display: block;
+    color: #333;
+}
+
+aside .input-block + .input-block{
+    margin-top: 20px;
+}
+
+aside .input-group {
+    margin-top: 20px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+}
+
+aside .input-group .input-block {
+    margin-top: 0;
+}
+
+aside .input-block label {
+    color: #acacac;
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+}
+
+aside .input-block input {
+    width: 100%;
+    height: 32px;
+    font-size: 14px;
+    color: #666;
+    border: 0;
+    border-bottom: 1px solid #eee;
+}
+
+aside button {
+    width: 100%;
+    border: 0;
+    margin-top: 30px;
+    background: orange;
+    border-radius: 2px;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.5s;
+}
+
+aside button:hover {
+    background:orangered;
+}
+
+aside img {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    margin-left: 113px;
+}
+
+li.turmas {
+    background: #FFF;
+    box-shadow:  0 0 14px 0 rgba(0, 0, 0, 0.02);
+    border-radius: 2px;
+    padding: 20px;
+}
+
+li.turmas header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+li.turmas header img {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+
+}
+
+li.turmas header .informacoes {
+    margin-left: 10px;
+}
+
+.informacoes strong {
+    display: block;
+    font-size:  16px;
+    color: #333;
+}
+
+.informacoes span {
+    font-size: 13px;
+    color: #999;
+    margin-top: 2px;
+}
+
+li.turmas p {
+    color: #666;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 10px 0;
+}
+
+li.informacoes a {
+    color: #8e4dff;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+li.turmas a:hover {
+    color: #5a2ea6;
 }

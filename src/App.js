@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import './App.css';
+import './Login.css';
 import './global.css'
-import './Main.css'
+import './App.css'
 import firebase from "firebase"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-import StudentForm from './components/StudentForm'
 
 // Configure Firebase.
 const config = {
@@ -25,13 +24,13 @@ class FileInput extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fileInput = React.createRef();
-    this.state = {image: firebase.auth().currentUser.photoURL};
+    this.state = { image: firebase.auth().currentUser.photoURL };
   }
   handleSubmit(event) {
     event.preventDefault();
     alert(
       `Selected file - ${
-        this.fileInput.current.files[0].name
+      this.fileInput.current.files[0].name
       }`
     );
     this.setState({
@@ -40,15 +39,14 @@ class FileInput extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevState.image != this.state.image)
-    {
+    if (prevState.image != this.state.image) {
       var firebasePhoto = this.fileInput.current.files[0];
       var uploadTask = storageRef.child('images/' + firebasePhoto.name).put(firebasePhoto);
       // Register three observers:
       // 1. 'state_changed' observer, called any time the state changes
       // 2. Error observer, called on failure
       // 3. Completion observer, called on successful completion
-      uploadTask.on('state_changed', function(snapshot){
+      uploadTask.on('state_changed', function (snapshot) {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -61,12 +59,12 @@ class FileInput extends React.Component {
             console.log('Upload is running');
             break;
         }
-      }, function(error) {
+      }, function (error) {
         // Handle unsuccessful uploads
-      }, function() {
+      }, function () {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log('File available at', downloadURL);
         });
       });
@@ -76,9 +74,9 @@ class FileInput extends React.Component {
       //user.updateProfile({
       //  photoURL: 
       //}).then(function() {
-        // Update successful.
+      // Update successful.
       //}).catch(function(error) {
-        // An error happened.
+      // An error happened.
       //});
     }
   }
@@ -86,15 +84,18 @@ class FileInput extends React.Component {
   render() {
     return (
       <div>
-        <img alt="Imagem de Perfil" src={this.state.image}></img>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Selecionar Foto:
+        <div className="input-block">
+          <img alt="Imagem de Perfil" src={this.state.image}></img>
+        </div>
+        <div className="input-block">
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Trocar foto:
             <input type="file" ref={this.fileInput} />
-          </label>
-          <br />
-          <button type="submit">Salvar</button>
-        </form>
+            </label>
+            <button type="submit">Salvar alterações</button>
+          </form>
+        </div>
       </div>
     );
   }
@@ -124,10 +125,10 @@ class SignInScreen extends React.Component {
   // Listen to the Firebase Auth state and set the local state.
   componentDidMount() {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-        (user) => this.setState({isSignedIn: !!user})
+      (user) => this.setState({ isSignedIn: !!user })
     );
   }
-  
+
   // Make sure we un-register Firebase observers when the component unmounts.
   componentWillUnmount() {
     this.unregisterAuthObserver();
@@ -135,21 +136,56 @@ class SignInScreen extends React.Component {
 
   render() {
     if (!this.state.isSignedIn) {
+
       return (
-        <div>
-          <h1>Ubireudo</h1>
-          <p>Por favor, faça o login:</p>
-          <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
-        </div>
+        <div id="login">
+          <main>
+            <strong>Ubireudo</strong>
+            <div className="input-block">
+              <label htmlFor="nome_aluno">Faça o cadastro usando uma das opções abaixo:</label>
+            </div>
+            <div className="input-block">
+              <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
+            </div>
+          </main>
+        </div >
       );
+
     }
     return (
-      <div>
-        <h1>Ubireudo</h1>
-        <FileInput></FileInput>
-        <p>Seja bem-vindo, {firebase.auth().currentUser.displayName}! Agora você está conectado!</p>
-        <a onClick={() => firebase.auth().signOut()}>Desconectar</a>
+
+      <div id="app">
+        <aside>
+          <strong>Ubireudo</strong>
+          <div className="input-block">
+            <label>Seja bem-vindo, {firebase.auth().currentUser.displayName}!</label>
+          </div>
+          <div className="input-block">
+            <FileInput></FileInput>
+          </div>
+          <button onClick={() => firebase.auth().signOut()}>Desconectar</button>
+        </aside>
+
+        <main>
+          <ul>
+
+            <li className="turmas">
+              <header>
+                <img src="" alt="img" />
+                <div className="informacoes">
+                  <strong>nome da turma</strong>
+                  <span>descrição</span>
+                </div>
+              </header>
+              <p>pontuação</p>
+              <a href="">provavel acesso a algo</a>
+            </li>
+
+            
+          </ul>
+        </main>
       </div>
+
     );
   }
 }

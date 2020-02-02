@@ -19,3 +19,10 @@ body {
 body, input, button {
     font-family: Roboto, sans-serif;
 }
+
+label {
+    color: #acacac;
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+}
