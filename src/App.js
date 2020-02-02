@@ -11,9 +11,12 @@ import StudentForm from './components/StudentForm'
 const config = {
   apiKey: 'AIzaSyBCDqncv8ZHjdxm2BOTFkDmw-LlKLhfRqY',
   authDomain: 'ubireudo.firebaseapp.com',
+  storageBucket: 'gs://ubireudo.appspot.com'
   // ...
 };
 firebase.initializeApp(config);
+var storage = firebase.storage();
+var storageRef = storage.ref();
 
 class SignInScreen extends React.Component {
 
@@ -64,9 +67,18 @@ class SignInScreen extends React.Component {
         <img alt="Imagem de Perfil" src={firebase.auth().currentUser.photoURL}></img>
         <p>Seja bem-vindo, {firebase.auth().currentUser.displayName}! Agora você está conectado!</p>
         <a onClick={() => firebase.auth().signOut()}>Desconectar</a>
+        <input type="file" id="avatar" name="avatar"
+       accept="image/png, image/jpeg" onChange={() => handleFiles(this.files)}/>
       </div>
     );
   }
+}
+
+function handleFiles(files) {
+  var avatar = files[0];
+  console.log(avatar.name);
+  // Upload file and metadata to the object 'images/mountains.jpg'
+//var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
 }
 
 function App() {
