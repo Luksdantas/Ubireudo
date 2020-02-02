@@ -11,15 +11,14 @@ import StudentForm from './components/StudentForm'
 const config = {
   apiKey: 'AIzaSyBCDqncv8ZHjdxm2BOTFkDmw-LlKLhfRqY',
   authDomain: 'ubireudo.firebaseapp.com',
-  storageBucket: 'gs://ubireudo.appspot.com'
+  storageBucket: 'gs://ubireudo.appspot.com',
+  databaseURL: 'https://ubireudo.firebaseio.com/',
   // ...
 };
 firebase.initializeApp(config);
 var storage = firebase.storage();
 var database = firebase.database();
 var storageRef = storage.ref();
-
-console.log(database.ref(''))
 
 class FileInput extends React.Component {
   constructor(props) {
@@ -71,6 +70,16 @@ class FileInput extends React.Component {
           console.log('File available at', downloadURL);
         });
       });
+
+      // Sistema de persistência de foto de perfil
+      //var user = firebase.auth().currentUser;
+      //user.updateProfile({
+      //  photoURL: 
+      //}).then(function() {
+        // Update successful.
+      //}).catch(function(error) {
+        // An error happened.
+      //});
     }
   }
 
