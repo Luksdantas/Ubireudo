@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 var storage = firebase.storage();
 var database = firebase.database();
 var storageRef = storage.ref();
-var publicoUsuarios = null;
+//var publicoUsuarios = null;
 
 function httpGetAsync(url, callback) {
     var xmlHttp = new XMLHttpRequest();
@@ -51,9 +51,10 @@ function httpPutAsync(url, data, callback) {
 }
 
 // GET request example:
-// httpGetAsync('https://ubireudo.firebaseio.com/users_public.json', function(texto){
-//     publicoUsuarios = JSON.parse(texto);
-// });
+ //httpGetAsync('https://ubireudo.firebaseio.com/users_public.json', function(texto){
+  //   console.log(texto);
+ //    publicoUsuarios = JSON.parse(texto);
+ //});
 
 // POST request example
 // httpPostAsync('https://ubireudo.firebaseio.com/users_public.json', JSON.stringify({"teste": "ok"}), function(texto) 
@@ -61,4 +62,4 @@ function httpPutAsync(url, data, callback) {
 //     console.log(texto);
 // });
 
-export {storage, database, storageRef, publicoUsuarios, httpGetAsync, httpPostAsync, httpPutAsync};
+export {storage, database, storageRef, /*publicoUsuarios,*/ httpGetAsync, httpPostAsync, httpPutAsync};

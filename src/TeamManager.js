@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { httpGetAsync, httpPutAsync } from './firebase';
+import { globalUser} from './SignInScreen.js';
 
 class TeamManager extends React.Component {
     constructor(props) {
@@ -9,7 +11,16 @@ class TeamManager extends React.Component {
     }
 
     handleSubmit(event) {
-      console.log("teste123");
+      event.preventDefault();
+      httpGetAsync('https://ubireudo.firebaseio.com/users_public/' + globalUser.uid + 
+      '.json?auth=' + globalUser.uid, function(texto) {
+        var userData = JSON.parse(texto);
+        userData.teamCode = event.target.teamCode.value;
+        httpPutAsync('https://ubireudo.firebaseio.com/users_public/' + globalUser.uid + 
+        '.json?auth=' + globalUser.uid, JSON.stringify(userData), function(texto) {
+        console.log(texto);
+      });
+      });
     }
   
     render() {
@@ -29,7 +40,7 @@ class TeamManager extends React.Component {
             isManagerOpen: !prevState.isManagerOpen}))}>Gerenciador de Turmas</button>
           <form onSubmit={this.handleSubmit}>
             <label>Código da turma:</label>
-            <input type="text"></input>
+            <input type="text" name="teamCode"></input>
             <button type="submit">Salvar</button>
           </form>
         </div>)

@@ -5,12 +5,27 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 import TeamManager from './TeamManager.js';
 import {storage, database, storageRef, httpGetAsync, httpPostAsync, httpPutAsync} from './firebase.js'
 
+var globalUser = null;
+
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
+    globalUser = user;
     // User is signed in.
+    // If creation time is equal to last login time, then the user must be new
     if (firebase.auth().currentUser.metadata.creationTime === 
     firebase.auth().currentUser.metadata.lastSignInTime){
-      httpPostAsync('https://ubireudo.firebaseio.com/users_public.json', JSON.stringify(user), function(texto) {
+      var userRelevantData = {
+        "displayName": user.displayName,
+        "photoURL": user.photoURL,
+        "email": user.email,
+        "emailVerified": user.emailVerified,
+        "phoneNumber": user.phoneNumber,
+        "creationTime": user.metadata.creationTime,
+        "lastSignInTime": user.metadata.lastSignInTime,
+        "teamCode": 0,
+      };
+      httpPostAsync('https://ubireudo.firebaseio.com/users_public/' + user.uid + '.json?auth=' + user.uid, 
+      JSON.stringify(userRelevantData), function(texto) {
         console.log(texto);
       });
     }
@@ -109,3 +124,4 @@ class SignInScreen extends React.Component {
   }
 
   export default SignInScreen;
+  export {globalUser};
