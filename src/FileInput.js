@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from "firebase"
 import Cropper from 'react-easy-crop'
-import {storage, database, storageRef, httpPutAsync} from './firebase.js'
-
-httpPutAsync('https://ubireudo.firebaseio.com/users_public/-M-6pzJHf6fCK1z2YvMF.json', JSON.stringify({"teste": "ok"}), function(texto) 
-{
-    console.log(texto);
-});
+import {storage, database, storageRef, httpGetAsync, httpPostAsync, httpPutAsync} from './firebase.js'
 
 class FileInput extends React.Component {
     constructor(props) {
@@ -43,10 +38,6 @@ class FileInput extends React.Component {
       this.setState({
         image: URL.createObjectURL(this.fileInput.current.files[0])
       });
-      httpPutAsync('https://ubireudo.firebaseio.com/users_public/-M-6pzJHf6fCK1z2YvMF.json', JSON.stringify({"teste": "okeye"}), function(texto) 
-{
-    console.log(texto);
-});
     }
   
     componentDidUpdate(prevProps, prevState) {

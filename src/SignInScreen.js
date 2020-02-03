@@ -2,6 +2,22 @@ import React, { useState, useEffect } from 'react';
 import FileInput from './FileInput.js'
 import firebase from "firebase"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
+import TeamManager from './TeamManager.js';
+import {storage, database, storageRef, httpGetAsync, httpPostAsync, httpPutAsync} from './firebase.js'
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    if (firebase.auth().currentUser.metadata.creationTime === 
+    firebase.auth().currentUser.metadata.lastSignInTime){
+      httpPostAsync('https://ubireudo.firebaseio.com/users_public.json', JSON.stringify(user), function(texto) {
+        console.log(texto);
+      });
+    }
+  } else {
+    // No user is signed in.
+  }
+});
 
 class SignInScreen extends React.Component {
 
@@ -80,7 +96,7 @@ class SignInScreen extends React.Component {
                   </div>
                 </header>
                 <p>pontuação</p>
-                <a href="">provavel acesso a algo</a>
+                <TeamManager></TeamManager>
               </li>
   
               
