@@ -167,3 +167,26 @@ li.informacoes a {
 li.turmas a:hover {
     color: #5a2ea6;
 }
+
+#entrarturma {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+}
+
+#entrarturma button {
+    margin-top: 0px;
+    margin-left: 20px;
+    background: orange;
+    border-radius: 2px;
+    padding: 15px 20px;
+    font-size: 8px;
+    padding: 0;
+    width: 100px;
+
+    
+}
+
+#entrarturma button:hover {
+    background:orangered;
+}
