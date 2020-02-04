@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import firebase from "firebase"
 import Cropper from 'react-easy-crop'
-import { storage, database, storageRef, httpGetAsync, httpPostAsync, httpPutAsync } from './firebase.js'
+import { storageRef} from './firebase.js'
+
+var urlImage = null;
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    firebase.database().ref('users_public/' + user.uid + "/urlImage").on('value', function(snapshot) {
+      urlImage = snapshot.val();
+    });
+  } else {
+    // No user is signed in.
+  }
+});
 
 class FileInput extends React.Component {
   constructor(props) {
@@ -68,6 +80,9 @@ class FileInput extends React.Component {
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log('File available at', downloadURL);
+          firebase.database().ref('users_public/' + firebase.auth().currentUser.uid).update({
+            urlImage : downloadURL,
+          });
         });
       });
 

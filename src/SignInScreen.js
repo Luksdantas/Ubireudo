@@ -1,38 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import FileInput from './FileInput.js'
 import firebase from "firebase"
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 import TeamManager from './TeamManager.js';
-import { storage, database, storageRef, httpGetAsync, httpPostAsync, httpPutAsync } from './firebase.js'
-
-var globalUser = null;
-
-firebase.auth().onAuthStateChanged(function (user) {
-  if (user) {
-    globalUser = user;
-    // User is signed in.
-    // If creation time is equal to last login time, then the user must be new
-    if (firebase.auth().currentUser.metadata.creationTime ===
-      firebase.auth().currentUser.metadata.lastSignInTime) {
-      var userRelevantData = {
-        "displayName": user.displayName,
-        "photoURL": user.photoURL,
-        "email": user.email,
-        "emailVerified": user.emailVerified,
-        "phoneNumber": user.phoneNumber,
-        "creationTime": user.metadata.creationTime,
-        "lastSignInTime": user.metadata.lastSignInTime,
-        "teamCode": 0,
-      };
-      httpPostAsync('https://ubireudo.firebaseio.com/users_public/' + user.uid + '.json?auth=' + user.uid,
-        JSON.stringify(userRelevantData), function (texto) {
-          console.log(texto);
-        });
-    }
-  } else {
-    // No user is signed in.
-  }
-});
+import NameManager from './NameManager.js';
 
 class SignInScreen extends React.Component {
 
@@ -67,6 +37,35 @@ class SignInScreen extends React.Component {
     this.unregisterAuthObserver();
   }
 
+  handleSubmit() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+      .then(function(result) {
+        console.log(result);
+        var user = result.user;
+        if(result.additionalUserInfo.isNewUser)
+        {
+          console.log("Seja bem-vindo, novo usuário!");
+          var userRelevantData = {
+            "name": user.displayName,
+            "nameGoogle": user.providerData[0].displayName,
+            "urlImage": user.photoURL,
+            "urlImageGoogle": user.providerData[0].photoURL,
+            "email": user.email,
+            "emailVerified": user.emailVerified,
+            "creationTime": user.metadata.creationTime,
+            "lastSignInTime": user.metadata.lastSignInTime,
+            "teamCode": 0,
+          };
+          var ref_user = firebase.database().ref("users_public").child(user.uid);
+          ref_user.update(userRelevantData);
+        }
+      })
+      .catch(function(error) {
+       // Handle error.
+      });
+  }
+
   render() {
     if (!this.state.isSignedIn) {
 
@@ -77,9 +76,7 @@ class SignInScreen extends React.Component {
             <div className="input-block">
               <label htmlFor="nome_aluno">Faça o cadastro usando uma das opções abaixo:</label>
             </div>
-            <div className="input-block">
-              <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
-            </div>
+            <button onClick={this.handleSubmit}>Login com Google</button>
           </main>
         </div >
       );
@@ -97,6 +94,7 @@ class SignInScreen extends React.Component {
             <FileInput></FileInput>
           </div>
           <TeamManager></TeamManager>
+          <NameManager></NameManager>
           <button onClick={() => firebase.auth().signOut()}>Desconectar</button>
         </aside>
 
@@ -145,4 +143,3 @@ class SignInScreen extends React.Component {
 }
 
 export default SignInScreen;
-export { globalUser };

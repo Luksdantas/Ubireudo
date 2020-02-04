@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from "firebase";
 
-class TeamManager extends React.Component {
+class NameManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +12,7 @@ class TeamManager extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     firebase.database().ref('users_public/' + firebase.auth().currentUser.uid).update({
-      teamCode : event.target.teamCode.value,
+      name : event.target.fullName.value,
     });
   }
 
@@ -22,7 +22,7 @@ class TeamManager extends React.Component {
         <div>
           <button onClick={() => this.setState(prevState => ({
             isManagerOpen: !prevState.isManagerOpen
-          }))}>Gerenciador de Turmas</button>
+          }))}>Gerenciador de Nomes</button>
         </div>
       );
     }
@@ -31,13 +31,13 @@ class TeamManager extends React.Component {
       <div>
         <button onClick={() => this.setState(prevState => ({
           isManagerOpen: !prevState.isManagerOpen
-        }))}>Gerenciador de Turmas</button>
+        }))}>Gerenciador de Nomes</button>
         <form onSubmit={this.handleSubmit}>
-          <label>Código da turma:</label>
+          <label>Nome Completo:</label>
           <div id="entrarturma">
 
-            <input type="text" name="teamCode"></input>
-            <button type="submit">Entrar na Turma</button>
+            <input type="text" name="fullName"></input>
+            <button type="submit">Salvar Nome</button>
 
           </div>
         </form>
@@ -46,4 +46,4 @@ class TeamManager extends React.Component {
   }
 }
 
-export default TeamManager;
+export default NameManager;
