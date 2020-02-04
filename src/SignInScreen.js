@@ -3,6 +3,7 @@ import FileInput from './FileInput.js'
 import firebase from "firebase"
 import TeamManager from './TeamManager.js';
 import NameManager from './NameManager.js';
+import ubireudo from "./ubireudo_tranparente_tudo.png"
 
 class SignInScreen extends React.Component {
 
@@ -55,7 +56,6 @@ class SignInScreen extends React.Component {
             "emailVerified": user.emailVerified,
             "creationTime": user.metadata.creationTime,
             "lastSignInTime": user.metadata.lastSignInTime,
-            "teamCode": 0,
           };
           var ref_user = firebase.database().ref("users_public").child(user.uid);
           ref_user.update(userRelevantData);
@@ -72,7 +72,7 @@ class SignInScreen extends React.Component {
       return (
         <div id="login">
           <main>
-            <strong>Ubireudo</strong>
+            {/* <img src={require('./logo.jpeg')}></img> */}
             <div className="input-block">
               <label htmlFor="nome_aluno">Faça o cadastro usando uma das opções abaixo:</label>
             </div>
@@ -93,12 +93,15 @@ class SignInScreen extends React.Component {
           <div className="input-block">
             <FileInput></FileInput>
           </div>
-          <TeamManager></TeamManager>
-          <NameManager></NameManager>
           <button onClick={() => firebase.auth().signOut()}>Desconectar</button>
         </aside>
 
-        <main>
+        <aside>
+          <TeamManager></TeamManager>
+          <NameManager></NameManager>
+        </aside>
+
+        {/* <main>
           <ul>
 
             <li className="turmas">
@@ -135,7 +138,7 @@ class SignInScreen extends React.Component {
             </li>
 
           </ul>
-        </main>
+        </main> */}
       </div>
 
     );

@@ -1,0 +1,29 @@
+[debug] [2020-02-03T11:16:01.156Z] ----------------------------------------------------------------------
+[debug] [2020-02-03T11:16:01.162Z] Command:       /usr/local/bin/node /Users/alissonglinhares/.npm-global/bin/firebase serve
+[debug] [2020-02-03T11:16:01.162Z] CLI Version:   7.3.2
+[debug] [2020-02-03T11:16:01.162Z] Platform:      darwin
+[debug] [2020-02-03T11:16:01.162Z] Node Version:  v8.12.0
+[debug] [2020-02-03T11:16:01.163Z] Time:          Mon Feb 03 2020 08:16:01 GMT-0300 (-03)
+[debug] [2020-02-03T11:16:01.163Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2020-02-03T11:16:01.188Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-02-03T11:16:01.189Z] > authorizing via signed-in user
+[debug] [2020-02-03T11:16:01.189Z] [iam] checking project ubireudo for permissions ["firebase.projects.get"]
+[debug] [2020-02-03T11:16:01.193Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-02-03T11:16:01.193Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-02-03T11:16:01.592Z] <<< HTTP RESPONSE 200
+[debug] [2020-02-03T11:16:01.636Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/ubireudo:testIamPermissions  
+
+[debug] [2020-02-03T11:16:02.850Z] <<< HTTP RESPONSE 200
+[debug] [2020-02-03T11:16:02.852Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/ubireudo  
+ 
+[debug] [2020-02-03T11:16:04.226Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/alissonglinhares/ProjetosDartWeb/Ubireudo'...
+[info] 
+[debug] [2020-02-03T11:16:04.228Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/ubireudo/webApps/-/config  
+ 
+[debug] [2020-02-03T11:16:05.002Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: build
+[info] ✔  hosting: Local server: http://localhost:5000

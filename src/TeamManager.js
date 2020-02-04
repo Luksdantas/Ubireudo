@@ -8,12 +8,25 @@ class TeamManager extends React.Component {
       isManagerOpen: false,
     }
   }
-
+  
   handleSubmit(event) {
     event.preventDefault();
-    firebase.database().ref('users_public/' + firebase.auth().currentUser.uid).update({
-      teamCode : event.target.teamCode.value,
+    var dateFormat = require('dateformat');
+    var now = new Date();
+    now = dateFormat(now, "dd-mm-yyyy"); 
+
+    var uid = firebase.auth().currentUser.uid;
+    var key_room = event.target.teamCode.value;
+
+    firebase.database().ref('rooms/'+ key_room + '/uid_partcipants/' + uid + "/" + now + "/").update({
+       [new Date().getTime()]: 0,
     });
+
+    firebase.database().ref('users_private/'+ uid + '/ids_rooms_as_participant/').update({
+      [key_room]: true,
+   });
+
+   alert("Participante adicionado com sucesso!");
   }
 
   render() {

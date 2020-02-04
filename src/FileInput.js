@@ -10,6 +10,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     firebase.database().ref('users_public/' + user.uid + "/urlImage").on('value', function(snapshot) {
       urlImage = snapshot.val();
     });
+    alert(
+      `Arquivo escolhido - ${this.fileInput.current.files[0].name
+      }`
+    );
   } else {
     // No user is signed in.
   }
@@ -42,11 +46,11 @@ class FileInput extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    alert(
-      `Arquivo escolhido - ${
-      this.fileInput.current.files[0].name
-      }`
-    );
+    // alert(
+    //   `Arquivo escolhido - ${
+    //   this.fileInput.current.files[0].name
+    //   }`
+    // );
     this.setState({
       image: URL.createObjectURL(this.fileInput.current.files[0])
     });
