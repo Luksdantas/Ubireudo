@@ -3,7 +3,8 @@ import FileInput from './FileInput.js'
 import firebase from "firebase"
 import TeamManager from './TeamManager.js';
 import NameManager from './NameManager.js';
-import ubireudo from "./ubireudo_tranparente_tudo.png"
+import ubireudo from "./google_logo.png"
+import logo  from "./ubireudo_tranparente_tudo.png"
 
 class SignInScreen extends React.Component {
 
@@ -70,13 +71,18 @@ class SignInScreen extends React.Component {
     if (!this.state.isSignedIn) {
 
       return (
-        <div id="login">
+        <div id="login" style={{textAlign: "center", backgroundColor:"black"}}>
           <main>
             {/* <img src={require('./logo.jpeg')}></img> */}
-            <div className="input-block">
-              <label htmlFor="nome_aluno">Faça o cadastro usando uma das opções abaixo:</label>
+            <div syle={{width:"100%", height:"3em"}}>
+              <img alt="Logo" src={logo} style={{width:"100%"}}></img>
             </div>
-            <button onClick={this.handleSubmit}>Login com Google</button>
+            <button onClick={this.handleSubmit} style={{padding: "2em", verticalAlign:"middle" , borderRadius:"3em", fontSize: "4m", backgroundColor:"black", color:"gray", border:"2px solid gray"}}>
+            
+          <img alt="Google" src={ubireudo} style={{ padding:"0" ,width:"1.5em", height:"100%", marginRight: "1em"}}></img>
+        <b style={{verticalAlign:"middle", marginBottom:"1em", margin:0, fontSize:"1.5em"}}>Login com Google</b>
+              </button> 
+              
           </main>
         </div >
       );
@@ -96,10 +102,12 @@ class SignInScreen extends React.Component {
           <button onClick={() => firebase.auth().signOut()}>Desconectar</button>
         </aside>
 
-        <aside>
+        <main>
+          <aside>
           <TeamManager></TeamManager>
           <NameManager></NameManager>
-        </aside>
+          </aside>
+        </main>
 
         {/* <main>
           <ul>

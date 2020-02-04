@@ -16,7 +16,15 @@
 #login main {
     flex: 1;
     width: 320px;
-    background: #FFF;
+    background: rgb(0, 0, 0);
+    box-shadow:  0 0 14px 0 rgba(0, 0, 0, 0.02);
+    border-radius: 2px;
+    padding: 30px 20px;
+}
+#login main aside {
+    flex: 1;
+    width: 320px;
+    background: rgb(255, 254, 254);
     box-shadow:  0 0 14px 0 rgba(0, 0, 0, 0.02);
     border-radius: 2px;
     padding: 30px 20px;

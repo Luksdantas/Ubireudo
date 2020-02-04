@@ -190,3 +190,7 @@ li.turmas a:hover {
 #entrarturma button:hover {
     background:orangered;
 }
+
+#root {
+    background-color: black;
+}
