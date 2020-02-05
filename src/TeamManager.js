@@ -11,22 +11,31 @@ class TeamManager extends React.Component {
   
   handleSubmit(event) {
     event.preventDefault();
-    var dateFormat = require('dateformat');
-    var now = new Date();
-    now = dateFormat(now, "dd-mm-yyyy"); 
-
-    var uid = firebase.auth().currentUser.uid;
     var key_room = event.target.teamCode.value;
+    var roomRef = firebase.database().ref('rooms/');
+    roomRef.once('value', function(snapshot) {
+      if (snapshot.hasChild(key_room)) {
+        var dateFormat = require('dateformat');
+        var now = new Date();
+        now = dateFormat(now, "dd-mm-yyyy"); 
 
-    firebase.database().ref('rooms/'+ key_room + '/uid_partcipants/' + uid + "/" + now + "/").update({
-       [new Date().getTime()]: 0,
+        var uid = firebase.auth().currentUser.uid;
+
+        firebase.database().ref('rooms/'+ key_room + '/uid_participants/' + uid + "/" + now + "/").update({
+          [new Date().getTime()]: 0,
+        });
+
+        firebase.database().ref('users_private/'+ uid + '/ids_rooms_as_participant/').update({
+          [key_room]: true,
+        });
+
+        alert("Participante adicionado com sucesso!");
+      }
+      else
+      {
+        alert("Código de turma inválido. Confira se o código foi digitado corretamente.");
+      }
     });
-
-    firebase.database().ref('users_private/'+ uid + '/ids_rooms_as_participant/').update({
-      [key_room]: true,
-   });
-
-   alert("Participante adicionado com sucesso!");
   }
 
   render() {
