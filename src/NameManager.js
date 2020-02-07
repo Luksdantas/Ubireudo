@@ -20,25 +20,19 @@ class NameManager extends React.Component {
     if (!this.state.isManagerOpen) {
       return (
         <div>
-          <button onClick={() => this.setState(prevState => ({
-            isManagerOpen: !prevState.isManagerOpen
-          }))}>Gerenciador de Nomes</button>
+          <button onClick={() => this.setState(prevState => ({ isManagerOpen: !prevState.isManagerOpen }))}>Mudar Nome</button>
         </div>
       );
     }
 
     return (
       <div>
-        <button onClick={() => this.setState(prevState => ({
-          isManagerOpen: !prevState.isManagerOpen
-        }))}>Gerenciador de Nomes</button>
+        <button onClick={() => this.setState(prevState => ({ isManagerOpen: !prevState.isManagerOpen }))}>Mudar Nome</button>
         <form onSubmit={this.handleSubmit}>
           <label>Nome Completo:</label>
           <div id="gerenciador">
-
             <input type="text" name="fullName"></input>
-            <button type="submit">Salvar Nome</button>
-
+            <button type="submit">Salvar</button>
           </div>
         </form>
       </div>)

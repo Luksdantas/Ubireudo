@@ -103,22 +103,17 @@ class SignInScreen extends React.Component {
 
       <div id="app">
         <aside>
-          <strong>Ubireudo</strong>
-          <div className="input-block">
-            <label>Seja bem-vindo, {firebase.auth().currentUser.displayName}!</label>
-          </div>
-          <div className="input-block">
-            <FileInput></FileInput>
-          </div>
+          <strong>Perfil</strong>
+          <FileInput></FileInput>
+        </aside>
+
+        <aside>
+          <strong>Configurações</strong>
+          <TeamManager></TeamManager>
+          <NameManager></NameManager>
           <button onClick={() => firebase.auth().signOut()}>Desconectar</button>
         </aside>
 
-        <main>
-          <aside>
-            <TeamManager></TeamManager>
-            <NameManager></NameManager>
-          </aside>
-        </main>
 
       </div>
 

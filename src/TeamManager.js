@@ -41,25 +41,19 @@ class TeamManager extends React.Component {
     if (!this.state.isManagerOpen) {
       return (
         <div>
-          <button onClick={() => this.setState(prevState => ({
-            isManagerOpen: !prevState.isManagerOpen
-          }))}>Gerenciador de Turmas</button>
+          <button onClick={() => this.setState(prevState => ({ isManagerOpen: !prevState.isManagerOpen }))}>Entrar em uma Turma</button>
         </div>
       );
     }
 
     return (
       <div>
-        <button onClick={() => this.setState(prevState => ({
-          isManagerOpen: !prevState.isManagerOpen
-        }))}>Gerenciador de Turmas</button>
+        <button onClick={() => this.setState(prevState => ({ isManagerOpen: !prevState.isManagerOpen }))}>Entrar em uma Turma</button>
         <form onSubmit={this.handleSubmit}>
           <label>Código da turma:</label>
           <div id="gerenciador">
-
             <input type="text" name="teamCode"></input>
-            <button type="submit">Entrar na Turma</button>
-
+            <button type="submit">Entrar</button>
           </div>
         </form>
       </div>)

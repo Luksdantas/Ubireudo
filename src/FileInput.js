@@ -110,18 +110,20 @@ class FileInput extends React.Component {
   render() {
     return (
       <div>
-        <div className="input-block">
-          <img id="profilePhoto" alt="Imagem de Perfil" src={this.state.image}></img>
+        <div id="text-img">
+          <div>
+            <img id="profilePhoto" alt="Imagem de Perfil" src={this.state.image}></img>
+          </div>
+          <div>
+            <label>Seja bem-vindo, {firebase.auth().currentUser.displayName}!</label>
+          </div>
         </div>
-        <div className="input-block">
-          <form onSubmit={this.handleSubmit}>
-            <label> Trocar foto: </label>
-            <div className="input-block">
-              <input id="photoInput" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleImageUpload} />
-            </div>
-            <button id="saveImage" type="submit">Salvar alterações</button>
-          </form>
-        </div>
+
+        <form onSubmit={this.handleSubmit}>
+          <label> Trocar foto: </label>
+          <input id="photoInput" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleImageUpload} />
+          <button id="saveImage" type="submit">Salvar Nova Imagem</button>
+        </form>
       </div>
     );
   }
