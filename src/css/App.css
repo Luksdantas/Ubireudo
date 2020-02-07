@@ -57,3 +57,10 @@
     width: 70%;
 }
 
+#progress {
+    background-color: red;
+    height: 2px;
+    margin-top: 5px;
+    width: 0%;
+    margin-bottom: 0;
+}

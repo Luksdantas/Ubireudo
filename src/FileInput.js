@@ -25,7 +25,6 @@ class FileInput extends React.Component {
 
   componentDidMount() {
     firebase.database().ref('users_public/' + firebase.auth().currentUser.uid + "/urlImage").on('value', snapshot => {
-      console.log("ok");
       this.setState({ image: snapshot.val() })
       // document.getElementById("profilePhoto").src = snapshot.val();
     });
@@ -48,6 +47,14 @@ class FileInput extends React.Component {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+
+        //barra de progresso
+        const valorDiv = document.getElementById('progress')
+        valorDiv.style.width = `${progress}%`
+
+        setTimeout(() => { valorDiv.style.width = `0%` }, 3000)
+
         console.log('Upload is ' + progress + '% done');
         switch (snapshot.state) {
           case firebase.storage.TaskState.PAUSED: // or 'paused'
@@ -84,6 +91,11 @@ class FileInput extends React.Component {
     console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
     console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
 
+    //barra de progresso
+    const valorDiv = document.getElementById('progress')
+    valorDiv.style.width = `1%`
+
+
     // Configurações da compressão. Altere os valores dos atributos para atingir o resultado almejado.
     var options = {
       maxSizeMB: 0.01,
@@ -99,6 +111,13 @@ class FileInput extends React.Component {
         // document.getElementById("photoInput").files[0] = [...compressedFiles];
         console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
         console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+
+
+        //barra de progresso
+        const valorDiv = document.getElementById('progress')
+        valorDiv.style.width = `30%`
+
+
         // return uploadToServer(compressedFile); // write your own logic
       })
       .catch(function (error) {
@@ -120,8 +139,9 @@ class FileInput extends React.Component {
         </div>
 
         <form onSubmit={this.handleSubmit}>
-          <label> Trocar foto: </label>
+          <label> Trocar foto:</label>
           <input id="photoInput" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleImageUpload} />
+          <div id="progress"></div>
           <button id="saveImage" type="submit">Salvar Nova Imagem</button>
         </form>
       </div>
