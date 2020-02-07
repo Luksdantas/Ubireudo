@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import firebase from "firebase"
-import { storageRef} from './firebase.js'
+import { storageRef } from './firebase.js'
 import imageCompression from 'browser-image-compression';
 
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     console.log("User logged in.");
   } else {
@@ -26,8 +26,8 @@ class FileInput extends React.Component {
   componentDidMount() {
     firebase.database().ref('users_public/' + firebase.auth().currentUser.uid + "/urlImage").on('value', snapshot => {
       console.log("ok");
-      this.setState({image: snapshot.val()})
-     // document.getElementById("profilePhoto").src = snapshot.val();
+      this.setState({ image: snapshot.val() })
+      // document.getElementById("profilePhoto").src = snapshot.val();
     });
   }
 
@@ -38,41 +38,39 @@ class FileInput extends React.Component {
     var firebasePhoto = this.state.compressedImage;
     // var firebasePhoto = this.fileInput.current.files[0];
     var imageReg = /image\/*/
-    if(imageReg.test(firebasePhoto.type))
-    {
+    if (imageReg.test(firebasePhoto.type)) {
       var uploadTask = storageRef.child('images/' + firebasePhoto.name).put(firebasePhoto);
       // Register three observers:
       // 1. 'state_changed' observer, called any time the state changes
       // 2. Error observer, called on failure
       // 3. Completion observer, called on successful completion
       uploadTask.on('state_changed', function (snapshot) {
-      // Observe state change events such as progress, pause, and resume
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED: // or 'paused'
-          console.log('Upload is paused');
-          break;
-        case firebase.storage.TaskState.RUNNING: // or 'running'
-          console.log('Upload is running');
-          break;
-      }
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
       }, function (error) {
-      // Handle unsuccessful uploads
+        // Handle unsuccessful uploads
       }, function () {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           console.log('File available at', downloadURL);
           firebase.database().ref('users_public/' + firebase.auth().currentUser.uid).update({
-            urlImage : downloadURL,
+            urlImage: downloadURL,
           });
         });
       });
     }
-    else
-    {
+    else {
       alert("Arquivo inválido. Confira se o arquivo é realmente uma imagem.")
     }
   }
@@ -82,10 +80,10 @@ class FileInput extends React.Component {
     document.getElementById("saveImage").disabled = true;
     var component = this;
     var imageFile = document.getElementById("photoInput").files[0];
-    this.setState({image: URL.createObjectURL(imageFile)});
+    this.setState({ image: URL.createObjectURL(imageFile) });
     console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
     console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
-   
+
     // Configurações da compressão. Altere os valores dos atributos para atingir o resultado almejado.
     var options = {
       maxSizeMB: 0.01,
@@ -95,8 +93,8 @@ class FileInput extends React.Component {
 
     imageCompression(imageFile, options)
       .then(function (compressedFile) {
-        component.setState({image: URL.createObjectURL(compressedFile)});
-        component.setState({compressedImage: compressedFile});
+        component.setState({ image: URL.createObjectURL(compressedFile) });
+        component.setState({ compressedImage: compressedFile });
         // var compressedFiles = [compressedFile];
         // document.getElementById("photoInput").files[0] = [...compressedFiles];
         console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
@@ -119,7 +117,7 @@ class FileInput extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label> Trocar foto: </label>
             <div className="input-block">
-              <input id="photoInput" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleImageUpload}/>
+              <input id="photoInput" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleImageUpload} />
             </div>
             <button id="saveImage" type="submit">Salvar alterações</button>
           </form>

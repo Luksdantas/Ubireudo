@@ -12,7 +12,7 @@ class NameManager extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     firebase.database().ref('users_public/' + firebase.auth().currentUser.uid).update({
-      name : event.target.fullName.value,
+      name: event.target.fullName.value,
     });
   }
 
@@ -34,7 +34,7 @@ class NameManager extends React.Component {
         }))}>Gerenciador de Nomes</button>
         <form onSubmit={this.handleSubmit}>
           <label>Nome Completo:</label>
-          <div id="entrarturma">
+          <div id="gerenciador">
 
             <input type="text" name="fullName"></input>
             <button type="submit">Salvar Nome</button>

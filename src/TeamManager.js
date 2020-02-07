@@ -8,31 +8,30 @@ class TeamManager extends React.Component {
       isManagerOpen: false,
     }
   }
-  
+
   handleSubmit(event) {
     event.preventDefault();
     var key_room = event.target.teamCode.value;
     var roomRef = firebase.database().ref('rooms/');
-    roomRef.once('value', function(snapshot) {
+    roomRef.once('value', function (snapshot) {
       if (snapshot.hasChild(key_room)) {
         var dateFormat = require('dateformat');
         var now = new Date();
-        now = dateFormat(now, "dd-mm-yyyy"); 
+        now = dateFormat(now, "dd-mm-yyyy");
 
         var uid = firebase.auth().currentUser.uid;
 
-        firebase.database().ref('rooms/'+ key_room + '/uid_participants/' + uid + "/" + now + "/").update({
+        firebase.database().ref('rooms/' + key_room + '/uid_participants/' + uid + "/" + now + "/").update({
           [new Date().getTime()]: 0,
         });
 
-        firebase.database().ref('users_private/'+ uid + '/ids_rooms_as_participant/').update({
+        firebase.database().ref('users_private/' + uid + '/ids_rooms_as_participant/').update({
           [key_room]: true,
         });
 
         alert("Participante adicionado com sucesso!");
       }
-      else
-      {
+      else {
         alert("Código de turma inválido. Confira se o código foi digitado corretamente.");
       }
     });
@@ -56,7 +55,7 @@ class TeamManager extends React.Component {
         }))}>Gerenciador de Turmas</button>
         <form onSubmit={this.handleSubmit}>
           <label>Código da turma:</label>
-          <div id="entrarturma">
+          <div id="gerenciador">
 
             <input type="text" name="teamCode"></input>
             <button type="submit">Entrar na Turma</button>
