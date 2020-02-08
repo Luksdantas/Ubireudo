@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import SignInScreen from './App.js'
+import LoginScreen from './LoginScreen.js'
 
 
-ReactDOM.render(<SignInScreen></SignInScreen>, document.getElementById('root'));
+ReactDOM.render(<LoginScreen></LoginScreen>, document.getElementById('root'));

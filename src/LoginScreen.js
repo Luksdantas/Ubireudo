@@ -12,7 +12,7 @@ import NameManager from './NameManager.js';
 import ubireudo from "./images/google_logo.png"
 import logo from "./images/ubireudo_tranparente_tudo.png"
 
-class SignInScreen extends React.Component {
+class LoginScreen extends React.Component {
 
   // The component's Local state.
   state = {
@@ -49,7 +49,6 @@ class SignInScreen extends React.Component {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
       .then(function (result) {
-        console.log(result);
         var user = result.user;
         if (result.additionalUserInfo.isNewUser) {
           console.log("Seja bem-vindo, novo usuário!");
@@ -88,7 +87,7 @@ class SignInScreen extends React.Component {
                   <img alt="Google" src={ubireudo}></img>
                 </div>
                 <div>
-                  <strong>Login com Google</strong>
+                  <strong class="rudigusButton">Login com Google</strong>
                 </div>
               </div>
             </button>
@@ -103,12 +102,12 @@ class SignInScreen extends React.Component {
 
       <div id="app">
         <aside>
-          <strong>Perfil</strong>
+          <h1>Perfil</h1>
           <FileInput></FileInput>
         </aside>
 
         <aside>
-          <strong>Configurações</strong>
+          <h1>Configurações</h1>
           <TeamManager></TeamManager>
           <NameManager></NameManager>
           <button onClick={() => firebase.auth().signOut()}>Desconectar</button>
@@ -121,4 +120,4 @@ class SignInScreen extends React.Component {
   }
 }
 
-export default SignInScreen;
+export default LoginScreen;

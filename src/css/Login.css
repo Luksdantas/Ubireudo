@@ -19,12 +19,12 @@
 }
 
 #login button {
-    background-color: black;
-    border: 2px solid gray;
+    background-color: #222233;
+    border: 2px solid #aaccff;
 }
 
 #login button:hover {
-    background-color:gray;
+    background-color:#11111a;
 }
 
 #img-text {
@@ -45,4 +45,8 @@
         margin-right: 0;
         margin-top: 30px;
     }
+}
+
+.rudigusButton {
+    color: #aaccff;
 }
