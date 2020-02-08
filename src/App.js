@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import FileInput from './FileInput.js'
-import firebase from "firebase"
+import firebase from "firebase/app"
 
 import './css/Login.css';
 import './css/App.css';

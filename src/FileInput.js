@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import firebase from "firebase"
+import React from 'react';
+import firebase from "firebase/app"
 import { storageRef } from './firebase.js'
 import imageCompression from 'browser-image-compression';
+import {formatBytes} from './FileSize.js';
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
@@ -26,16 +27,16 @@ class FileInput extends React.Component {
   componentDidMount() {
     firebase.database().ref('users_public/' + firebase.auth().currentUser.uid + "/urlImage").on('value', snapshot => {
       this.setState({ image: snapshot.val() })
-      // document.getElementById("profilePhoto").src = snapshot.val();
     });
   }
 
   // Função chamada quando o formulário do input da imagem é enviado ao clicar no botão
   handleSubmit(event) {
-    console.log(this.fileInput);
     event.preventDefault();
     var firebasePhoto = this.state.compressedImage;
-    // var firebasePhoto = this.fileInput.current.files[0];
+    firebasePhoto.name = firebase.auth().currentUser.uid;
+    //+ "." + firebasePhoto.name.substring(firebasePhoto.name.lastIndexOf('.')+1, firebasePhoto.name.length) || firebasePhoto.name;
+    console.log(firebasePhoto);
     var imageReg = /image\/*/
     if (imageReg.test(firebasePhoto.type)) {
       var uploadTask = storageRef.child('images/' + firebasePhoto.name).put(firebasePhoto);
@@ -63,6 +64,8 @@ class FileInput extends React.Component {
           case firebase.storage.TaskState.RUNNING: // or 'running'
             console.log('Upload is running');
             break;
+          default:
+            break;
         }
       }, function (error) {
         // Handle unsuccessful uploads
@@ -88,8 +91,7 @@ class FileInput extends React.Component {
     var component = this;
     var imageFile = document.getElementById("photoInput").files[0];
     this.setState({ image: URL.createObjectURL(imageFile) });
-    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+    console.log(`Image size before compression: ${formatBytes(imageFile.size)}`);
 
     //barra de progresso
     const valorDiv = document.getElementById('progress')
@@ -107,18 +109,12 @@ class FileInput extends React.Component {
       .then(function (compressedFile) {
         component.setState({ image: URL.createObjectURL(compressedFile) });
         component.setState({ compressedImage: compressedFile });
-        // var compressedFiles = [compressedFile];
-        // document.getElementById("photoInput").files[0] = [...compressedFiles];
-        console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-        console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+        console.log(`Image size after compression: ${formatBytes(compressedFile.size)}`); // smaller than maxSizeMB
 
 
         //barra de progresso
         const valorDiv = document.getElementById('progress')
         valorDiv.style.width = `30%`
-
-
-        // return uploadToServer(compressedFile); // write your own logic
       })
       .catch(function (error) {
         console.log(error.message);

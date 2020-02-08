@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import firebase from "firebase";
+import React from 'react';
+import firebase from "firebase/app";
 
 class TeamManager extends React.Component {
   constructor(props) {
