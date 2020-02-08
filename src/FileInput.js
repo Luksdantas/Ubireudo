@@ -91,7 +91,7 @@ class FileInput extends React.Component {
     var component = this;
     var imageFile = document.getElementById("photoInput").files[0];
     var imageReg = /image\/*/
-    if (imageReg.test(imageFile.type)) {
+    if (imageFile != null && imageReg.test(imageFile.type)) {
       document.getElementById("saveImage").disabled = true;
       this.setState({ image: URL.createObjectURL(imageFile) });
       console.log(`Image size before compression: ${formatBytes(imageFile.size)}`);
