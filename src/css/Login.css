@@ -20,7 +20,7 @@
 
 #login button {
     background-color: #222233;
-    border: 2px solid #aaccff;
+    border: 2px solid orangered;
 }
 
 #login button:hover {
@@ -28,7 +28,7 @@
 }
 
 #login strong {
-    color: #aaccff;
+    color: orangered;
 }
 
 #img-text {

@@ -2,7 +2,7 @@ import React from 'react';
 import firebase from "firebase/app"
 import { storageRef } from './firebase.js'
 import imageCompression from 'browser-image-compression';
-import {formatBytes} from './FileSize.js';
+import { formatBytes } from './FileSize.js';
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
