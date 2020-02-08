@@ -87,7 +87,7 @@ class LoginScreen extends React.Component {
                   <img alt="Google" src={ubireudo}></img>
                 </div>
                 <div>
-                  <strong class="rudigusButton">Login com Google</strong>
+                  <strong>Login com Google</strong>
                 </div>
               </div>
             </button>
