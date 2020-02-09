@@ -5,11 +5,11 @@ import firebase from "firebase/app"
 import './css/Login.css';
 import './css/App.css';
 import './css/Global.css'
-import './css/Turmas.css'
+import './css/Teams.css'
 
-import TeamManager from './TeamManager.js';
-import NameManager from './NameManager.js';
-import Turmas from './Turmas.js'
+import TeamAssigner from './TeamAssigner.js';
+import UserRenamer from './UserRenamer.js';
+import Teams from './Teams.js'
 //import googleIcon from "./images/google_logo.png";
 import googleIconWhite from "./images/google_logo_white.png";
 import logoUbireudo from "./images/ubireudo_tranparente_tudo.png";
@@ -116,13 +116,13 @@ class LoginScreen extends React.Component {
         <aside>
           <h1>Perfil</h1>
           <FileInput></FileInput>
-          <NameManager></NameManager>
-          <TeamManager></TeamManager>
+          <UserRenamer></UserRenamer>
+          <TeamAssigner></TeamAssigner>
           <button onClick={() => firebase.auth().signOut()}>Desconectar</button>
         </aside>
         <main>
           <ul>
-            <Turmas />
+            <Teams />
             {
               /*
               uma demonstração de pra fazer aparecer automatizado as turmas, só q n sei fazer isso com firebase

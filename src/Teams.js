@@ -1,10 +1,17 @@
 import React from 'react'
 
-import './css/Turmas.css'
+import './css/Teams.css'
 
+class Teams extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          teams: null,
+        }
+    }
 
-function Turmas({ turma }) {
-    return (
+    render() {
+        const teamBlock = (
         <li className="turmas">
             <header>
                 <img src="turmaimage" alt="alt" />
@@ -14,9 +21,11 @@ function Turmas({ turma }) {
                 </div>
             </header>
             <p>pontuação</p>
-            <a href="">visualizar informações da turma</a>
-        </li>
-    )
-}
+        </li>);
+      return (
+        teamBlock
+      );
+    }
+  }
 
-export default Turmas
+export default Teams

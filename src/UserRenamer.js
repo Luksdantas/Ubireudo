@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from "firebase/app";
 
-class NameManager extends React.Component {
+class UserRenamer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,4 +40,4 @@ class NameManager extends React.Component {
   }
 }
 
-export default NameManager;
+export default UserRenamer;

@@ -1,20 +1,30 @@
 import React from 'react';
 import firebase from "firebase/app";
 
-class TeamManager extends React.Component {
+class TeamAssigner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isManagerOpen: false,
-      // userTeams - array que armazena as turmas em que o aluno está participando.
-      userTeams: [],
+      // array que armazena as turmas em que o aluno está participando.
+      teamList: [],
     }
   }
 
   componentDidMount() {
     firebase.database().ref("users_private/" + firebase.auth().currentUser.uid + "/ids_rooms_as_participant")
     .on('value', snapshot => {
-      this.setState({ userTeams: Object.keys(snapshot.val()) })
+      var userTeams = Object.keys(snapshot.val());
+      for(var i = 0; i < userTeams.length; i++)
+      {
+        firebase.database().ref("rooms/" + userTeams[i])
+        .on('value', snapshot => {
+          if(snapshot.exists())
+          {
+            this.state.teamList.push(snapshot.val());
+          }
+        });
+      }
     });
   }
 
@@ -70,4 +80,4 @@ class TeamManager extends React.Component {
   }
 }
 
-export default TeamManager;
+export default TeamAssigner;

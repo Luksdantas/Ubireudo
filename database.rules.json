@@ -2,9 +2,9 @@
   "rules": {
     "rooms": {
       "$room": {
+        ".read": true,
         "uid_participants": {
           "$uid": {
-            ".read": true,
             ".write": "root.child('rooms').child($room).child('uid_admins').hasChild('$uid')"
           }
         }
