@@ -72,7 +72,6 @@ aside {
     box-shadow:  0 0 14px 0 rgba(0, 0, 0, 0.02);
     border-radius: 2px;
     padding: 30px 20px;
-    margin-top: 20px;
 }
 
 strong {
@@ -87,4 +86,22 @@ aside img {
     height: 54px;
     border-radius: 50%;
     margin-left: 113px;
+}
+
+main {
+    flex: 1;
+}
+
+main ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    list-style: none;
+}
+
+@media (max-width: 650px) {
+ main ul {
+     grid-template-columns: 1fr;
+ }
+ 
 }

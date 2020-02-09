@@ -5,10 +5,11 @@ import firebase from "firebase/app"
 import './css/Login.css';
 import './css/App.css';
 import './css/Global.css'
+import './css/Turmas.css'
 
 import TeamManager from './TeamManager.js';
 import NameManager from './NameManager.js';
-
+import Turmas from './Turmas.js'
 //import googleIcon from "./images/google_logo.png";
 import googleIconWhite from "./images/google_logo_white.png";
 import logoUbireudo from "./images/ubireudo_tranparente_tudo.png";
@@ -17,7 +18,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     console.log("User logged in.");
     firebase.database().ref("users_public").child(user.uid)
-    .update({lastSignInTime: user.metadata.lastSignInTime});
+      .update({ lastSignInTime: user.metadata.lastSignInTime });
   } else {
     // No user is signed in.
   }
@@ -115,16 +116,41 @@ class LoginScreen extends React.Component {
         <aside>
           <h1>Perfil</h1>
           <FileInput></FileInput>
-        </aside>
-
-        <aside>
-          <h1>Configurações</h1>
-          <TeamManager></TeamManager>
           <NameManager></NameManager>
+          <TeamManager></TeamManager>
           <button onClick={() => firebase.auth().signOut()}>Desconectar</button>
         </aside>
+        <main>
+          <ul>
+
+            {
+              /*
+              uma demonstração de pra fazer aparecer automatizado as turmas, só q n sei fazer isso com firebase
+              {turmas.map(turma => (
+                <Turmas key={turma.id} turma={ turma } />
+              ))}
+              
+              */
+            }
 
 
+            {/* Nesse formato
+            <li className="turmas">
+              <header>
+                <img src="turmaimage" alt="" />
+                <div className="turma-info">
+                  <strong>turma name</strong>
+                  <span>turma descrição</span>
+                </div>
+              </header>
+              <p>pontuação</p>
+              <a href="">Algo</a>
+            </li>
+*/
+            }
+
+          </ul>
+        </main>
       </div>
 
     );
