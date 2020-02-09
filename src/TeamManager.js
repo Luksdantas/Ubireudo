@@ -6,7 +6,16 @@ class TeamManager extends React.Component {
     super(props);
     this.state = {
       isManagerOpen: false,
+      // userTeams - array que armazena as turmas em que o aluno está participando.
+      userTeams: [],
     }
+  }
+
+  componentDidMount() {
+    firebase.database().ref("users_private/" + firebase.auth().currentUser.uid + "/ids_rooms_as_participant")
+    .on('value', snapshot => {
+      this.setState({ userTeams: Object.keys(snapshot.val()) })
+    });
   }
 
   handleSubmit(event) {

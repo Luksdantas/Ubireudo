@@ -13,6 +13,16 @@ import NameManager from './NameManager.js';
 import googleIconWhite from "./images/google_logo_white.png";
 import logoUbireudo from "./images/ubireudo_tranparente_tudo.png";
 
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+    console.log("User logged in.");
+    firebase.database().ref("users_public").child(user.uid)
+    .update({lastSignInTime: user.metadata.lastSignInTime});
+  } else {
+    // No user is signed in.
+  }
+});
+
 class LoginScreen extends React.Component {
 
   // The component's Local state.

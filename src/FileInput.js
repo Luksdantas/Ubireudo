@@ -4,16 +4,6 @@ import { storageRef } from './firebase.js'
 import imageCompression from 'browser-image-compression';
 import { formatBytes } from './FileSize.js';
 
-firebase.auth().onAuthStateChanged(function (user) {
-  if (user) {
-    console.log("User logged in.");
-    firebase.database().ref("users_public").child(user.uid)
-    .update({lastSignInTime: user.metadata.lastSignInTime});
-  } else {
-    // No user is signed in.
-  }
-});
-
 class FileInput extends React.Component {
   constructor(props) {
     super(props);
@@ -28,10 +18,12 @@ class FileInput extends React.Component {
   }
 
   componentDidMount() {
-    firebase.database().ref('users_public/' + firebase.auth().currentUser.uid + "/urlImage").on('value', snapshot => {
+    firebase.database().ref('users_public/' + firebase.auth().currentUser.uid + "/urlImage")
+    .on('value', snapshot => {
       this.setState({ image: snapshot.val() })
     });
-    firebase.database().ref('users_public/' + firebase.auth().currentUser.uid + "/name").on('value', snapshot => {
+    firebase.database().ref('users_public/' + firebase.auth().currentUser.uid + "/name")
+    .on('value', snapshot => {
       this.setState({ name: snapshot.val() })
     });
   }
