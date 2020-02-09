@@ -7,6 +7,8 @@ import { formatBytes } from './FileSize.js';
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     console.log("User logged in.");
+    firebase.database().ref("users_public").child(user.uid)
+    .update({lastSignInTime: user.metadata.lastSignInTime});
   } else {
     // No user is signed in.
   }
