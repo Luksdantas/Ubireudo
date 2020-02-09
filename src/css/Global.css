@@ -10,7 +10,8 @@
 
 html, body, #root {
     height: 100%;
-    background-color: #000000;
+    background-color: #121212;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 body {
@@ -55,6 +56,10 @@ button {
 
 button:hover {
     background:orangered;
+}
+
+button:disabled {
+    background: silver;
 }
 
 img {

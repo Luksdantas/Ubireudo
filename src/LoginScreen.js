@@ -9,8 +9,9 @@ import './css/Global.css'
 import TeamManager from './TeamManager.js';
 import NameManager from './NameManager.js';
 
-import ubireudo from "./images/google_logo.png"
-import logo from "./images/ubireudo_tranparente_tudo.png"
+//import googleIcon from "./images/google_logo.png";
+import googleIconWhite from "./images/google_logo_white.png";
+import logoUbireudo from "./images/ubireudo_tranparente_tudo.png";
 
 class LoginScreen extends React.Component {
 
@@ -80,11 +81,11 @@ class LoginScreen extends React.Component {
 
         <div id="login">
           <main>
-            <img alt="Logo" src={logo}></img>
+            <img alt="Logo" src={logoUbireudo}></img>
             <button onClick={this.handleSubmit}>
               <div id="img-text">
                 <div>
-                  <img alt="Google" src={ubireudo}></img>
+                  <img alt="Google" src={googleIconWhite}></img>
                 </div>
                 <div>
                   <strong>Login com Google</strong>

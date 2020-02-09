@@ -19,16 +19,16 @@
 }
 
 #login button {
-    background-color: #222233;
+    background-color: orangered;
     border: 2px solid orangered;
 }
 
 #login button:hover {
-    background-color:#11111a;
+    background-color:#121212;
 }
 
 #login strong {
-    color: orangered;
+    color: #ffffff;
 }
 
 #img-text {
