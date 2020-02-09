@@ -4,22 +4,22 @@
       "$room": {
         "uid_participants": {
           "$uid": {
-            ".read": "request.auth.uid == uid",
-            ".write": "request.auth.uid == uid"
+            ".read": "$uid === auth.uid",
+            ".write": "$uid === auth.uid"
           }
         }
       }
     },
     "users_private": {
       "$uid": {
-        ".read": "request.auth.uid == uid",
-        ".write": "request.auth.uid == uid"
+        ".read": "$uid === auth.uid",
+            ".write": "$uid === auth.uid"
       }
     },
     "users_public": {
       "$uid": {
-        ".read": "request.auth.uid == uid",
-        ".write": "request.auth.uid == uid"
+        ".read": "$uid === auth.uid",
+            ".write": "$uid === auth.uid"
       }
     }
   }
