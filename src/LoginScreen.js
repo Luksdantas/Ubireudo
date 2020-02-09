@@ -122,7 +122,7 @@ class LoginScreen extends React.Component {
         </aside>
         <main>
           <ul>
-
+            <Turmas />
             {
               /*
               uma demonstração de pra fazer aparecer automatizado as turmas, só q n sei fazer isso com firebase
@@ -132,23 +132,6 @@ class LoginScreen extends React.Component {
               
               */
             }
-
-
-            {/* Nesse formato
-            <li className="turmas">
-              <header>
-                <img src="turmaimage" alt="" />
-                <div className="turma-info">
-                  <strong>turma name</strong>
-                  <span>turma descrição</span>
-                </div>
-              </header>
-              <p>pontuação</p>
-              <a href="">Algo</a>
-            </li>
-*/
-            }
-
           </ul>
         </main>
       </div>
