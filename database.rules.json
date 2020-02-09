@@ -4,8 +4,8 @@
       "$room": {
         "uid_participants": {
           "$uid": {
-            ".read": "$uid === auth.uid",
-            ".write": "$uid === auth.uid"
+            ".read": true,
+            ".write": "root.child('rooms').child($room).child('uid_admins').hasChild('$uid')"
           }
         }
       }
@@ -13,13 +13,13 @@
     "users_private": {
       "$uid": {
         ".read": "$uid === auth.uid",
-            ".write": "$uid === auth.uid"
+        ".write": "$uid === auth.uid"
       }
     },
     "users_public": {
       "$uid": {
-        ".read": "$uid === auth.uid",
-            ".write": "$uid === auth.uid"
+        ".read": true,
+        ".write": "$uid === auth.uid"
       }
     }
   }
