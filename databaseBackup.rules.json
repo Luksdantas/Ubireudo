@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "rooms": {
+      "$room": {
+        ".read": true,
+        "uid_participants": {
+          "$uid": {
+            ".write": "root.child('rooms').child($room).child('uid_admins').hasChild('$uid')"
+          }
+        }
+      }
+    },
+    "users_private": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "users_public": {
+      "$uid": {
+        ".read": true,
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
