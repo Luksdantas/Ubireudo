@@ -1,6 +1,26 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true
+    "rooms": {
+      ".read": true,
+      "$room": {
+        "uid_participants": {
+          "$uid": {
+            ".write": "$uid === auth.uid"
+          }
+        }
+      }
+    },
+    "users_private": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "users_public": {
+      "$uid": {
+        ".read": true,
+        ".write": "$uid === auth.uid"
+      }
+    }
   }
 }

@@ -15,16 +15,16 @@ class TeamAssigner extends React.Component {
     firebase.database().ref("users_private/" + firebase.auth().currentUser.uid + "/ids_rooms_as_participant")
     .on('value', snapshot => {
       var userTeams = Object.keys(snapshot.val());
-      for(var i = 0; i < userTeams.length; i++)
-      {
-        firebase.database().ref("rooms/" + userTeams[i])
+      firebase.database().ref("rooms")
         .on('value', snapshot => {
-          if(snapshot.exists())
+          for(var i = 0; i < userTeams.length; i++)
           {
-            this.state.teamList.push(snapshot.val());
+            if(snapshot.hasChild(userTeams[i]))
+            {
+              this.state.teamList.push(snapshot.val()[userTeams[i]]);
+            }
           }
-        });
-      }
+      });
     });
   }
 
