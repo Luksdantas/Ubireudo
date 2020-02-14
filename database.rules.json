@@ -1,13 +1,17 @@
 {
   "rules": {
     "rooms": {
-      ".read": true,
       "$room": {
         "uid_participants": {
           "$uid": {
             ".write": "$uid === auth.uid"
           }
         }
+      }
+    },
+    "rooms_enabled": {
+      "$room": {
+        ".read": true
       }
     },
     "users_private": {

@@ -15,43 +15,50 @@ class TeamAssigner extends React.Component {
     firebase.database().ref("users_private/" + firebase.auth().currentUser.uid + "/ids_rooms_as_participant")
     .on('value', snapshot => {
       var userTeams = Object.keys(snapshot.val());
-      firebase.database().ref("rooms")
+      for(var i = 0; i < userTeams.length; i++)
+      {
+        firebase.database().ref("rooms/" + userTeams[i])
         .on('value', snapshot => {
-          for(var i = 0; i < userTeams.length; i++)
+          if(snapshot.exists())
           {
-            if(snapshot.hasChild(userTeams[i]))
-            {
-              this.state.teamList.push(snapshot.val()[userTeams[i]]);
-            }
+            this.state.teamList.push(snapshot.val());
           }
-      });
+        });
+      }
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     var key_room = event.target.teamCode.value;
-    var roomRef = firebase.database().ref('rooms/');
+    var roomRef = firebase.database().ref('rooms_enabled/' + key_room);
     roomRef.once('value', function (snapshot) {
-      if (snapshot.hasChild(key_room)) {
-        var dateFormat = require('dateformat');
-        var now = new Date();
-        now = dateFormat(now, "dd-mm-yyyy");
+      if (snapshot.exists()) {
+        if(snapshot.val())
+        {
+          var dateFormat = require('dateformat');
+          var now = new Date();
+          now = dateFormat(now, "dd-mm-yyyy");
 
-        var uid = firebase.auth().currentUser.uid;
+          var uid = firebase.auth().currentUser.uid;
 
-        firebase.database().ref('rooms/' + key_room + '/uid_participants/' + uid + "/" + now + "/").update({
-          [new Date().getTime()]: 0,
-        });
+          firebase.database().ref('rooms/' + key_room + '/uid_participants/' + uid + "/" + now + "/").update({
+            [new Date().getTime()]: 0,
+          });
 
-        firebase.database().ref('users_private/' + uid + '/ids_rooms_as_participant/').update({
-          [key_room]: true,
-        });
+          firebase.database().ref('users_private/' + uid + '/ids_rooms_as_participant/').update({
+            [key_room]: true,
+          });
 
-        alert("Participante adicionado com sucesso!");
+          alert("Participante adicionado com sucesso!");
+        }
+        else
+        {
+          alert("O registro para essa sala foi desativado.");
+        }
       }
       else {
-        alert("Código de turma inválido. Confira se o código foi digitado corretamente.");
+        alert("Código de turma inválido. Verifique se o código foi digitado corretamente.");
       }
     });
   }
