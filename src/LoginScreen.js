@@ -123,15 +123,6 @@ class LoginScreen extends React.Component {
         <main>
           <ul>
             <Teams></Teams>
-            {
-              /*
-              uma demonstração de pra fazer aparecer automatizado as turmas, só q n sei fazer isso com firebase
-              {turmas.map(turma => (
-                <Turmas key={turma.id} turma={ turma } />
-              ))}
-              
-              */
-            }
           </ul>
         </main>
       </div>

@@ -19,13 +19,13 @@ class FileInput extends React.Component {
 
   componentDidMount() {
     firebase.database().ref('users_public/' + firebase.auth().currentUser.uid + "/urlImage")
-    .on('value', snapshot => {
-      this.setState({ image: snapshot.val() })
-    });
+      .on('value', snapshot => {
+        this.setState({ image: snapshot.val() })
+      });
     firebase.database().ref('users_public/' + firebase.auth().currentUser.uid + "/name")
-    .on('value', snapshot => {
-      this.setState({ name: snapshot.val() })
-    });
+      .on('value', snapshot => {
+        this.setState({ name: snapshot.val() })
+      });
   }
 
   // Função chamada quando o formulário do input da imagem é enviado ao clicar no botão
@@ -90,11 +90,6 @@ class FileInput extends React.Component {
       this.setState({ image: URL.createObjectURL(imageFile) });
       console.log(`Image size before compression: ${formatBytes(imageFile.size)}`);
 
-      //barra de progresso
-      const valorDiv = document.getElementById('progress')
-      valorDiv.style.width = `1%`
-
-
       // Configurações da compressão. Altere os valores dos atributos para atingir o resultado almejado.
       var options = {
         maxSizeMB: 0.01,
@@ -108,10 +103,6 @@ class FileInput extends React.Component {
           component.setState({ compressedImage: compressedFile });
           console.log(`Image size after compression: ${formatBytes(compressedFile.size)}`); // smaller than maxSizeMB
 
-
-          //barra de progresso
-          const valorDiv = document.getElementById('progress')
-          valorDiv.style.width = `30%`
         })
         .catch(function (error) {
           console.log(error.message);
