@@ -122,7 +122,7 @@ class LoginScreen extends React.Component {
         </aside>
         <main>
           <ul>
-            <Teams />
+            <Teams></Teams>
             {
               /*
               uma demonstração de pra fazer aparecer automatizado as turmas, só q n sei fazer isso com firebase

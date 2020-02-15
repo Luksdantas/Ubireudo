@@ -1,6 +1,6 @@
 {
   "rules": {
-    "rooms": {
+    "rooms_private": {
       "$room": {
         "uid_participants": {
           "$uid": {
@@ -9,7 +9,7 @@
         }
       }
     },
-    "rooms_enabled": {
+    "rooms_public": {
       "$room": {
         ".read": true
       }

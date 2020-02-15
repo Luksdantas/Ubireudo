@@ -6,60 +6,52 @@ class TeamAssigner extends React.Component {
     super(props);
     this.state = {
       isManagerOpen: false,
-      // array que armazena as turmas em que o aluno está participando.
-      teamList: [],
     }
-  }
-
-  componentDidMount() {
-    firebase.database().ref("users_private/" + firebase.auth().currentUser.uid + "/ids_rooms_as_participant")
-    .on('value', snapshot => {
-      var userTeams = Object.keys(snapshot.val());
-      for(var i = 0; i < userTeams.length; i++)
-      {
-        firebase.database().ref("rooms/" + userTeams[i])
-        .on('value', snapshot => {
-          if(snapshot.exists())
-          {
-            this.state.teamList.push(snapshot.val());
-          }
-        });
-      }
-    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     var key_room = event.target.teamCode.value;
-    var roomRef = firebase.database().ref('rooms_enabled/' + key_room);
-    roomRef.once('value', function (snapshot) {
-      if (snapshot.exists()) {
-        if(snapshot.val())
-        {
-          var dateFormat = require('dateformat');
-          var now = new Date();
-          now = dateFormat(now, "dd-mm-yyyy");
-
-          var uid = firebase.auth().currentUser.uid;
-
-          firebase.database().ref('rooms/' + key_room + '/uid_participants/' + uid + "/" + now + "/").update({
-            [new Date().getTime()]: 0,
-          });
-
-          firebase.database().ref('users_private/' + uid + '/ids_rooms_as_participant/').update({
-            [key_room]: true,
-          });
-
-          alert("Participante adicionado com sucesso!");
+    var roomRef = firebase.database().ref('rooms_public/' + key_room);
+    roomRef.once('value', function (roomSnapshot) {
+      firebase.database().ref("users_private/" + firebase.auth().currentUser.uid + "/ids_rooms_as_participant")
+      .once('value', participantSnapshot => {
+        // Caso o código informado pelo usuário não corresponda a nenhuma turma disponível
+        // no banco de dados, o registro do usuário na sala não será efetuado.
+        if (!roomSnapshot.exists()) {
+          alert("Código de turma inválido. Verifique se o código foi digitado corretamente.");
+          return;
         }
-        else
+        // Caso o usuário já esteja participando da sala cujo código foi fornecido,
+        // o registro do usuário na sala não será efetuado novamente.
+        if(participantSnapshot.hasChild(key_room))
         {
+          alert("Você já está registrado nessa sala.");
+          return;
+        }
+        // Caso a sala tenha o atributo enabled como falso no banco de dados, 
+        // o registro do usuário na sala não será efetuado.
+        if(!roomSnapshot.child('enabled').val()) {
           alert("O registro para essa sala foi desativado.");
+          return;
         }
-      }
-      else {
-        alert("Código de turma inválido. Verifique se o código foi digitado corretamente.");
-      }
+
+        var dateFormat = require('dateformat');
+        var now = new Date();
+        now = dateFormat(now, "dd-mm-yyyy");
+
+        var uid = firebase.auth().currentUser.uid;
+
+        firebase.database().ref('rooms_private/' + key_room + '/uid_participants/' + uid + "/" + now + "/").update({
+          [new Date().getTime()]: 0,
+        });
+
+        firebase.database().ref('users_private/' + uid + '/ids_rooms_as_participant/').update({
+          [key_room]: true,
+        });
+
+        alert("Participante adicionado com sucesso!");
+      });
     });
   }
 
