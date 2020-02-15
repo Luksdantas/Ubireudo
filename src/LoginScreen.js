@@ -12,7 +12,7 @@ import UserRenamer from './UserRenamer.js';
 import Teams from './Teams.js'
 //import googleIcon from "./images/google_logo.png";
 import googleIconWhite from "./images/google_logo_white.png";
-import logoUbireudo from "./images/ubireudo_tranparente_tudo.png";
+import logoUbireudo from "./images/ubireudo_logo.png";
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
