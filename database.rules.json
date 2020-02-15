@@ -1,30 +1,78 @@
 {
   "rules": {
+
     "rooms_private": {
       "$room": {
+        ".read": "data.child('uid_admins').hasChild(auth.uid)",
+        ".write": "data.child('uid_admins').hasChild(auth.uid)",
+        ".validate": "newData.hasChildren(['uid_admins', 'uid_participants'])",
+
+        "uid_admins": {
+          "$uid": { ".validate": "newData.isBoolean()" }
+        },
+
         "uid_participants": {
           "$uid": {
-            ".write": "$uid === auth.uid"
+            ".read": "$uid === auth.uid",
+            
+            "$day": {
+              "$time": { ".validate": "newData.isNumber() && newData.val() >= -2 && newData.val() <= 2" }
+            }
           }
-        }
+        },
+
+        "$other": { ".validate": false }
       }
     },
+
     "rooms_public": {
       "$room": {
-        ".read": true
+        ".read": true,
+        ".write": "root.child('rooms_private').child($room).child('uid_admins').hasChild(auth.uid)",
+        ".validate": "newData.hasChildren(['description', 'enabled', 'name', 'urlImage'])",
+
+        "description": { ".validate": "newData.isString() && newData.val().length < 120" },
+        "enabled": { ".validate": "newData.isBoolean()" },
+        "name": { ".validate": "newData.isString() && newData.val().length < 70" },
+        "urlImage": { ".validate": "newData.isString() && newData.val().length < 2000" },
+
+        "created": { ".validate": "newData.isNumber()" },
+        "$other": { ".validate": false }
       }
     },
+
     "users_private": {
       "$uid": {
         ".read": "$uid === auth.uid",
-        ".write": "$uid === auth.uid"
+        ".write": "$uid === auth.uid",
+        ".validate": "newData.hasChild('ids_rooms_as_participant')",
+
+        "ids_rooms_as_participant": {
+          "$room": { ".validate": "newData.isBoolean()" }
+        },
+
+        "$other": { ".validate": false }
       }
     },
+
     "users_public": {
       "$uid": {
         ".read": true,
-        ".write": "$uid === auth.uid"
+        ".write": "$uid === auth.uid",
+        ".validate": "newData.hasChildren(['email', 'name', 'urlImage'])",
+
+        "email": { ".validate": "newData.isString() && newData.val().length <= 254" },
+        "name": { ".validate": "newData.isString() && newData.val().length <= 70" },
+        "urlImage": { ".validate": "newData.isString() && newData.val().length <= 2000" },
+
+        "creationTime": { ".validate": "newData.isString()" },
+        "emailVerified": { ".validate": "newData.isBoolean()" },
+        "lastSignInTime": { ".validate": "newData.isString()" },
+        "nameGoogle": { ".validate": "newData.isString() && newData.val().length <= 70" },
+        "urlImageGoogle": { ".validate": "newData.isString() && newData.val().length <= 2000" },
+        "$other": { ".validate": false }
       }
     }
+
   }
 }

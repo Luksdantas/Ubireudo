@@ -34,7 +34,7 @@ class FileInput extends React.Component {
     var firebasePhoto = this.state.compressedImage;
     var imageReg = /image\/*/
     if (firebasePhoto != null && imageReg.test(firebasePhoto.type)) {
-      var uploadTask = storageRef.child('images/' + firebase.auth().currentUser.uid).put(firebasePhoto);
+      var uploadTask = storageRef.child('users/' + firebase.auth().currentUser.uid + '/profileImage').put(firebasePhoto);
       // Register three observers:
       // 1. 'state_changed' observer, called any time the state changes
       // 2. Error observer, called on failure
