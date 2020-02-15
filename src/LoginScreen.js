@@ -5,11 +5,11 @@ import firebase from "firebase/app"
 import './css/Login.css';
 import './css/App.css';
 import './css/Global.css'
-import './css/Teams.css'
+import './css/TeamsList.css'
 
 import TeamAssigner from './TeamAssigner.js';
 import UserRenamer from './UserRenamer.js';
-import Teams from './Teams.js'
+import TeamsList from './TeamsList.js'
 //import googleIcon from "./images/google_logo.png";
 import googleIconWhite from "./images/google_logo_white.png";
 import logoUbireudo from "./images/ubireudo_logo.png";
@@ -122,7 +122,7 @@ class LoginScreen extends React.Component {
         </aside>
         <main>
           <ul>
-            <Teams></Teams>
+            <TeamsList></TeamsList>
           </ul>
         </main>
       </div>

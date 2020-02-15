@@ -1,7 +1,7 @@
 import React from 'react'
 import firebase from "firebase/app";
 
-import './css/Teams.css'
+import './css/TeamsList.css'
 
 class Teams extends React.Component {
   constructor(props) {
@@ -41,8 +41,8 @@ class Teams extends React.Component {
               <span>{this.state.teams[key].description}</span>
             </div>
           </header>
-          <p>pontuação</p>  
-          <button>Acessar turma</button>
+          <p>Pontuação: --/--</p>
+          <button className="teamAcess">Acessar turma</button>
         </li>
       ))
 
