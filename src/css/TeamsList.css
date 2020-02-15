@@ -23,14 +23,16 @@ li.turmas header .turma-info {
 }
 
 .turma-info strong {
+    width: 100%;
     display: block;
     font-size:  16px;
     color: #333;
+    text-align: start;
 }
 
 .turma-info span {
     font-size: 13px;
-    color: #999;
+    color: rgb(120, 120, 120);
     margin-top: 2px;
 }
 
@@ -41,12 +43,12 @@ li.turmas p {
     margin: 10px 0;
 }
 
-li.turmas a {
-    color: #8e4dff;
-    font-size: 14px;
-    text-decoration: none;
-}
+button.teamAcess {
+    height: 30px;
+    width: 40%;
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 8px;
+    background-color: grey;
 
-li.turmas a:hover {
-    color: #5a2ea6;
 }
