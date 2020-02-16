@@ -17,12 +17,7 @@ service firebase.storage {
 
     function hasExpectedFilename(filename)
     {
-      switch(filename) {
-        case 'profileImage':
-          return true;
-        default:
-          return false;
-      }
+      return filename == profileImage;
     }
 
     function isEmpty()
