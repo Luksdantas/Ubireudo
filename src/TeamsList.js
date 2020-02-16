@@ -49,7 +49,6 @@ class TeamsList extends React.Component {
     
     render() {
       return (
-        <div>{
           Object.keys(this.state.teams).map(key => (
             <li key={key} className="turmas">
               <header>
@@ -62,8 +61,8 @@ class TeamsList extends React.Component {
               <p>Pontuação: {this.state.scores[key]}</p>
               <button className="teamAcess">Acessar turma</button>
             </li>
-          ))};</div>
-      );
+          ))
+      )
     }
   }
 
