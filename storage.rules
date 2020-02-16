@@ -1,0 +1,42 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function lessThanNMegabytes(n) {
+      return request.resource.size < n * 1024 * 1024;
+    }
+
+    function isImage()
+    {
+      return request.resource.contentType.matches("image/.*");
+    }
+
+    function isCurrentUser(uid)
+    {
+      return request.auth.uid == uid;
+    }
+
+    function hasExpectedFilename(filename)
+    {
+      switch(filename) {
+        case 'profileImage':
+          return true;
+        default:
+          return false;
+      }
+    }
+
+    function isEmpty()
+    {
+      return request.resource == null;
+    }
+
+    match /users/{uid}/{filename} {
+    	allow read;
+    	allow write: if isCurrentUser(uid) &&
+      								hasExpectedFilename(filename) &&
+                      lessThanNMegabytes(1) &&
+                      isImage() &&
+                      ! isEmpty();
+    }
+  }
+}
