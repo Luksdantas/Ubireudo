@@ -9,9 +9,27 @@ class TeamAssigner extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const parametros_url = new URLSearchParams(window.location.search);
+    if(parametros_url.has('room')) {
+        const room = parametros_url.get('room');
+        // Create the event
+        var event = new CustomEvent("room_button_clicked", { "detail": { "room": room } });
+        // Dispatch/Trigger/Fire the event
+        this.handleSubmit(event);
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    var key_room = event.target.teamCode.value;
+    var key_room = '';
+    if(event.detail != null) {
+      if(event.detail.room != null) {
+        key_room = event.detail.room;
+      }
+    } else {
+        key_room = event.target.teamCode.value;
+    }
     var roomRef = firebase.database().ref('rooms_public/' + key_room);
     roomRef.once('value', function (roomSnapshot) {
       firebase.database().ref("users_private/" + firebase.auth().currentUser.uid + "/ids_rooms_as_participant")
